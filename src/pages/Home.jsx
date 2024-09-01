@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import EmptyState from '../components/EmptyState';
+import CandidatesTable from '../components/CandidatesTable';
 import { candidatesService } from '../services/apiService';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -19,6 +22,8 @@ const Home = () => {
       } finally {
         setLoading(false);
       }
+
+      navigate('/');
     };
 
     fetchCandidates();
@@ -33,22 +38,7 @@ const Home = () => {
       {candidates.length === 0 ? (
         <EmptyState />
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {candidates.map(candidate => (
-              <tr key={candidate.id}>
-                <td>{candidate.id}</td>
-                <td>{candidate.name}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <CandidatesTable candidates={candidates} />
       )}
     </div>
   );
