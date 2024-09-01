@@ -17,7 +17,7 @@ class CandidateController extends Controller
         $this->candidateService = $candidateService;
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
         try {
             $candidates = $this->candidateService->getAllCandidates();
@@ -28,7 +28,7 @@ class CandidateController extends Controller
         }
     }
 
-    public function show($id)
+    public function show($id): JsonResponse
     {
         try {
             $candidate = $this->candidateService->getCandidateById($id);
@@ -52,7 +52,7 @@ class CandidateController extends Controller
         }
     }
 
-    public function update(StoreCandidateRequest $request, $id)
+    public function update(StoreCandidateRequest $request, $id): JsonResponse
     {
         try {
             $validated = $request->validated();
@@ -69,7 +69,7 @@ class CandidateController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
       try {
           $candidate = $this->candidateService->deleteCandidate($id);

@@ -13,12 +13,12 @@ class CandidateService
         $this->candidateRepository = $candidateRepository;
     }
 
-    public function getAllCandidates()
+    public function getAllCandidates($perPage = 15): \Illuminate\Pagination\LengthAwarePaginator
     {
-        return $this->candidateRepository->all();
+        return $this->candidateRepository->all($perPage);
     }
 
-    public function getCandidateById($id)
+    public function getCandidateById($id): array
     {
         $candidate = $this->candidateRepository->find($id);
 
@@ -29,7 +29,7 @@ class CandidateService
         return ['data' => $candidate, 'status' => 200];
     }
 
-    public function createCandidate(array $data)
+    public function createCandidate(array $data): array
     {
         $emailFound = $this->candidateRepository->findByKey('email', $data['email']);
 
@@ -50,7 +50,7 @@ class CandidateService
         return ['data' => $newCandidate, 'message' => 'Candidate created successfully', 'status' => 201];
     }
 
-    public function updateCandidate($id, array $data)
+    public function updateCandidate($id, array $data): array
     {
         $candidate = $this->candidateRepository->find($id);
 
@@ -77,7 +77,7 @@ class CandidateService
         return ['data' => $updatedCandidate, 'message' => 'Candidate updated successfully', 'status' => 200];
     }
 
-    public function deleteCandidate($id)
+    public function deleteCandidate($id): array
     {
         $candidate = $this->candidateRepository->find($id);
 
