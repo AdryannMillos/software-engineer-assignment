@@ -17,8 +17,11 @@ use App\Http\Controllers\CandidateController;
 Route::get('/', function () {
     return response()->json(['message' => 'Live!'], 200);
 });
-Route::get('candidates', [CandidateController::class, 'index']);
-Route::post('candidate', [CandidateController::class, 'store']);
-Route::get('candidate/{id}', [CandidateController::class, 'show']);
-Route::put('candidate/{id}', [CandidateController::class, 'update']);
-Route::delete('candidate/{id}', [CandidateController::class, 'destroy']);
+
+Route::group(['prefix' => 'candidates'], function () {
+    Route::get('/', [CandidateController::class, 'index']);
+    Route::post('/', [CandidateController::class, 'store']);
+    Route::get('/{id}', [CandidateController::class, 'show']);
+    Route::put('/{id}', [CandidateController::class, 'update']);
+    Route::delete('/{id}', [CandidateController::class, 'destroy']);
+});
