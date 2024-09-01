@@ -58,11 +58,7 @@ class DispositionsController extends Controller
 
             $disposition = $this->dispositionService->updateDisposition($id, $validated);
 
-            if (isset($disposition['error'])) {
-                return response()->json(['message' => $disposition['error']], $disposition['status']);
-            }
-
-            return response()->json($disposition, 200);
+            return response()->json($disposition, $disposition['status']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

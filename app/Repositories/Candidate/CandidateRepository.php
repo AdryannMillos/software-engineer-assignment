@@ -8,12 +8,12 @@ class CandidateRepository implements CandidateRepositoryInterface
 {
     public function all($paginate = 15): \Illuminate\Pagination\LengthAwarePaginator
     {
-        return Candidate::paginate($paginate);
+        return Candidate::with('disposition')->paginate($paginate);
     }
 
     public function find($id): Candidate | null
     {
-        return Candidate::find($id);
+        return Candidate::with('disposition')->find($id);
     }
 
     public function create(array $data): Candidate
@@ -30,16 +30,18 @@ class CandidateRepository implements CandidateRepositoryInterface
 
     public function findByKey($key, $value): \Illuminate\Database\Eloquent\Collection
     {
-        return Candidate::where($key, $value)->get();
+        return Candidate::with('disposition')
+            ->where($key, $value)
+            ->get();
     }
 
     public function findByKeyExcept($key, $value, $exceptId): \Illuminate\Database\Eloquent\Collection
     {
-        return Candidate::where($key, $value)
+        return Candidate::with('disposition')
+            ->where($key, $value)
             ->where('id', '!=', $exceptId)
             ->get();
     }
-
 
     public function delete($id): bool
     {

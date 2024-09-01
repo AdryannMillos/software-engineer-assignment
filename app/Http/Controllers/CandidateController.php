@@ -59,11 +59,7 @@ class CandidateController extends Controller
 
             $candidate = $this->candidateService->updateCandidate($id, $validated);
 
-            if ($candidate['error']) {
-                return response()->json(['message' => $candidate['error']], $candidate['status']);
-            }
-
-            return response()->json($candidate, 200);
+            return response()->json($candidate, $candidate['status']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
